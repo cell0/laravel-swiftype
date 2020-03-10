@@ -12,4 +12,10 @@ class User extends Model
     public $table = 'users';
 
     public $guarded = [];
+
+    public function shouldSyncSwiftypeOnSave()
+    {
+        return $this->name !== 'Do not sync';
+    }
+
 }

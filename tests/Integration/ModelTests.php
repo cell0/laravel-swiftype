@@ -27,4 +27,24 @@ class ModelTests extends BaseTestCase
 
         $this->assertEmpty($documents['results']);
     }
+
+    /**
+     * @test
+     */
+    public function deletes_document_when_should_sync_becomes_false()
+    {
+        $user = factory(User::class)->create();
+
+        $documents = $this->engine->listDocuments();
+
+        $this->assertEquals($user->getKey(), $documents['results'][0]['id']);
+
+        // User is set to NOT sync when name equals 'Do not sync'
+        $user->name = 'Do not sync';
+        $user->save();
+
+        $documents = $this->engine->listDocuments();
+
+        $this->assertEmpty($documents['results']);
+    }
 }
