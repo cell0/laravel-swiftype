@@ -13,7 +13,7 @@ class DeleteDocument implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $documentId;
+    public $documentId;
 
     /**
      * Create a new job instance.
@@ -22,7 +22,6 @@ class DeleteDocument implements ShouldQueue
      */
     public function __construct($documentId)
     {
-        //
         $this->documentId = $documentId;
     }
 

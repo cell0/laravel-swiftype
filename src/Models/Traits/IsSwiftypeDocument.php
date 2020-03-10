@@ -21,11 +21,16 @@ trait IsSwiftypeDocument
 
     public function maybeIndexWithSwiftype()
     {
+        $data = $this->getSwiftypeAttributes();
+
         // are we syncing
         if (! $this->shouldSyncSwiftypeOnSave()) {
+            if (! empty($data) && $data['id']) {
+                dispatch(new DeleteDocument($data['id']));
+            }
             return;
         }
-        $data = $this->getSwiftypeAttributes();
+
         // is there any data to sync
         if (! empty($data)) {
             dispatch(new IndexDocument($data));
